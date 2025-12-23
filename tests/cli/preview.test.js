@@ -1,8 +1,21 @@
 import { patchFs } from "fs-monkey";
 import { Volume } from "memfs";
 import MockDate from "mockdate";
+import { afterAll, beforeAll } from "vitest";
 
 import { preview } from "../../src/cli/preview";
+
+var stdoutMock;
+
+beforeAll(() => {
+  stdoutMock = vi
+    .spyOn(process.stdout, "write")
+    .mockImplementation(() => undefined);
+});
+
+afterAll(() => {
+  stdoutMock.mockRestore();
+});
 
 afterEach(() => {
   MockDate.reset();
@@ -51,8 +64,9 @@ test("should only return date when there are no fragments", async () => {
 
   patchFs(vol);
 
-  const result = preview({});
+  preview({});
 
+  const result = stdoutMock.mock.lastCall[0];
   expect(result).toContain("# [NEXT_RELEASE] - (2019-05-14)");
   expect(result).not.toContain("## Features");
   expect(result).not.toContain("## Bugfixes");
@@ -72,8 +86,9 @@ test("should return data from fragments", async () => {
 
   patchFs(vol);
 
-  const result = preview({});
+  preview({});
 
+  const result = stdoutMock.mock.lastCall[0];
   expect(result).toContain("# [NEXT_RELEASE] - (2019-05-14)");
   expect(result).toContain("## Features");
   expect(result).toContain("My feature");
@@ -88,8 +103,9 @@ test("should return a previous version", async () => {
 
   patchFs(vol);
 
-  const result = preview({}, { previousVersion: "1.0.1" });
+  preview({}, { previousVersion: "1.0.1" });
 
+  const result = stdoutMock.mock.lastCall[0];
   expect(result).toContain("# [1.0.1] - (2020-03-11)");
   expect(result).toContain("## Bugfixes");
   expect(result).toContain(
@@ -106,7 +122,8 @@ test("should return nothing when the previous version doesn't exist", async () =
 
   patchFs(vol);
 
-  const result = preview({}, { previousVersion: "5.0.1" });
+  preview({}, { previousVersion: "5.0.1" });
 
+  const result = stdoutMock.mock.lastCall[0];
   expect(result).toEqual("");
 });

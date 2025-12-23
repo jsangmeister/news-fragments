@@ -3,8 +3,21 @@ import fs from "fs";
 import { patchFs } from "fs-monkey";
 import { Volume } from "memfs";
 import MockDate from "mockdate";
+import { afterAll, beforeAll } from "vitest";
 
 import { burn } from "../../src/cli/burn";
+
+var stdoutMock;
+
+beforeAll(() => {
+  stdoutMock = vi
+    .spyOn(process.stdout, "write")
+    .mockImplementation(() => undefined);
+});
+
+afterAll(() => {
+  stdoutMock.mockRestore();
+});
 
 beforeEach(() => {
   MockDate.set("2020-12-02T11:01:58.135Z");
@@ -20,7 +33,8 @@ test("should show an error when no version is passed", async () => {
   const expected = chalkTemplate`No version was found.
 Please, provide one like: {green news-fragments burn 0.0.1}`;
 
-  expect(result).toEqual(expected);
+  expect(result).toBe(1);
+  expect(stdoutMock).toHaveBeenLastCalledWith(expected);
 });
 
 test("should show an error if there is no fragment to burn", async () => {
@@ -35,7 +49,8 @@ test("should show an error if there is no fragment to burn", async () => {
   const expected = chalkTemplate`No fragments were found.
 Remember to create with {green news-fragments create <fragment-type> <fragment-text>}`;
 
-  expect(result).toEqual(expected);
+  expect(result).toBe(1);
+  expect(stdoutMock).toHaveBeenLastCalledWith(expected);
 });
 
 test("should save the changelog and delete the fragments", async () => {
@@ -63,5 +78,8 @@ test("should save the changelog and delete the fragments", async () => {
 
   expect(fs.readFileSync("CHANGELOG.md").toString()).toEqual(expected);
   expect(fs.existsSync("fragments/xpto.feature")).toBeFalsy();
-  expect(result).toEqual("1 fragments burned in CHANGELOG.md");
+  expect(result).toBe(0);
+  expect(stdoutMock).toHaveBeenLastCalledWith(
+    "1 fragments burned in CHANGELOG.md",
+  );
 });

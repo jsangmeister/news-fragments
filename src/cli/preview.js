@@ -16,7 +16,7 @@ export const preview = function (inputs, flags) {
 
     process.stdout.write(previousOutput);
 
-    return previousOutput;
+    return 0;
   }
 
   const newsFragments = getFragments(newsFragmentsUserConfig);
@@ -37,5 +37,5 @@ export const preview = function (inputs, flags) {
   const output = renderMarkdownForTerminal(renderedTemplate);
   process.stdout.write(output);
 
-  return output;
+  return 0;
 };

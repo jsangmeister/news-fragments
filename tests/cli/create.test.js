@@ -47,10 +47,10 @@ test("should return success message when create a fragment", async () => {
 test("should return error message when try to create a fragment file", async () => {
   const result = create(["create", "doidera"]);
 
-  expect(result).toBe(1);
   const expected = chalkTemplate`Fragment type {red doidera} is invalid.
 Choose one of available fragment types: {green feature,bugfix,doc,removal,misc}`;
 
+  expect(result).toBe(1);
   expect(stdoutMock).toHaveBeenLastCalledWith(expected);
 });
 
