@@ -35,6 +35,7 @@ export default class NewsFragments extends Plugin {
     );
     saveChangelogToFile(
       newsFragmentsUserConfig.changelogFile,
+      newsFragmentsUserConfig.changelogPrefixLines,
       renderedTemplate,
     );
     deleteFragmentsFiles(this.fragmentsToDelete);

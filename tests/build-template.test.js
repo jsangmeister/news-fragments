@@ -66,7 +66,7 @@ test("should write in an empty file", () => {
   patchFs(vol);
 
   const renderedTemplate = renderTemplate(changelogTemplate, mockData, "0.0.2");
-  saveChangelogToFile(changelogFile, renderedTemplate);
+  saveChangelogToFile(changelogFile, 0, renderedTemplate);
   expect(fs.readFileSync(changelogFile).toString()).toStrictEqual(`
 [//]: # (s-0.0.2)
 
@@ -92,7 +92,7 @@ test("should prepend in a file with content", () => {
   patchFs(vol);
 
   const renderedTemplate = renderTemplate(changelogTemplate, mockData, "0.0.2");
-  saveChangelogToFile(changelogFile, renderedTemplate);
+  saveChangelogToFile(changelogFile, 0, renderedTemplate);
   const data = fs.readFileSync(changelogFile);
   expect(data.toString()).toStrictEqual(`
 [//]: # (s-0.0.2)
