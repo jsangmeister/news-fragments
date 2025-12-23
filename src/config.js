@@ -16,6 +16,7 @@ const schema = Joi.object({
   changelogPrefixLines: Joi.number().integer().min(0).required(),
   fragmentsFolder: Joi.string().required(),
   fragmentsTypes: Joi.array().items(fragmentsTypesSchema).required(),
+  fragmentsAutoAddDot: Joi.bool().required(),
 });
 
 const changelogTemplate = `# [{{newVersion}}] - ({{bumpDate}})
@@ -42,6 +43,7 @@ const baseConfig = {
     { title: "Deprecations and Removals", extension: "removal" },
     { title: "Misc", extension: "misc" },
   ],
+  fragmentsAutoAddDot: true,
 };
 
 export const buildConfig = function (config) {

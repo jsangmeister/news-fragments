@@ -31,7 +31,11 @@ Choose one of available fragment types: {green ${availableFragmentTypes}}`;
 
   checkFragmentsFolder(fragmentsFolder);
 
-  if (fragmentText.length > 0 && !fragmentText.endsWith(".")) {
+  if (
+    newsFragmentsUserConfig.fragmentsAutoAddDot &&
+    fragmentText.length > 0 &&
+    !fragmentText.endsWith(".")
+  ) {
     fragmentText = `${fragmentText}.`;
   }
 
