@@ -46,7 +46,7 @@ export default class NewsFragments extends Plugin {
     return renderTemplate(
       userConfig.changelogTemplate,
       templateData,
-      newsFragmentsUserConfig.changelogAddMetadata ? version : undefined,
+      userConfig.changelogAddMetadata ? version : undefined,
     );
   }
   bump(version) {
@@ -60,7 +60,11 @@ export default class NewsFragments extends Plugin {
       return;
     }
 
-    saveChangelogToFile(userConfig.changelogFile, renderedTemplate);
+    saveChangelogToFile(
+      userConfig.changelogFile,
+      userConfig.changelogPrefixLines,
+      renderedTemplate,
+    );
     deleteFragmentsFiles(this.fragmentsToDelete);
   }
   getChangelog() {

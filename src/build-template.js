@@ -21,7 +21,11 @@ export const renderTemplate = function (changelogTemplate, data, version) {
   return version ? injectMetadata(renderedTemplate, version) : renderedTemplate;
 };
 
-export const saveChangelogToFile = function (filePath, renderedTemplate) {
+export const saveChangelogToFile = function (
+  filePath,
+  prefixLinesCount,
+  renderedTemplate,
+) {
   // Check if the file exists
   if (!fs.existsSync(filePath)) {
     // asynchronously create a directory
@@ -29,10 +33,12 @@ export const saveChangelogToFile = function (filePath, renderedTemplate) {
     return;
   }
 
-  const oldData = fs.readFileSync(filePath);
-  const newData = new Buffer.from(renderedTemplate);
+  const oldChangelog = fs.readFileSync(filePath, "utf8");
+  const lines = oldChangelog.split("\n");
+  const prefix = lines.slice(0, prefixLinesCount).join("\n");
+  const oldData = lines.slice(prefixLinesCount).join("\n");
   fs.unlinkSync(filePath);
-  fs.appendFileSync(filePath, newData + oldData);
+  fs.appendFileSync(filePath, prefix + renderedTemplate + oldData);
 };
 
 export const generateTemplateData = function (
