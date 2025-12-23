@@ -3,11 +3,21 @@ import fs from "fs";
 import { patchFs } from "fs-monkey";
 import { Volume } from "memfs";
 import MockDate from "mockdate";
-import { beforeEach } from "vitest";
+import { afterAll, beforeAll, beforeEach } from "vitest";
 
 import { create } from "../../src/cli/create";
 
-beforeEach(() => {});
+var stdoutMock;
+
+beforeAll(() => {
+  stdoutMock = vi
+    .spyOn(process.stdout, "write")
+    .mockImplementation(() => undefined);
+});
+
+afterAll(() => {
+  stdoutMock.mockRestore();
+});
 
 afterEach(() => {
   try {
@@ -28,7 +38,8 @@ beforeEach(() => {
 test("should return success message when create a fragment", async () => {
   const result = create(["create", "feature", "show"]);
 
-  expect(result).toStrictEqual(
+  expect(result).toBe(0);
+  expect(stdoutMock).toHaveBeenLastCalledWith(
     "Fragment fragments/1557831718135.feature created with success!",
   );
 });
@@ -36,10 +47,11 @@ test("should return success message when create a fragment", async () => {
 test("should return error message when try to create a fragment file", async () => {
   const result = create(["create", "doidera"]);
 
+  expect(result).toBe(1);
   const expected = chalkTemplate`Fragment type {red doidera} is invalid.
 Choose one of available fragment types: {green feature,bugfix,doc,removal,misc}`;
 
-  expect(result).toStrictEqual(expected);
+  expect(stdoutMock).toHaveBeenLastCalledWith(expected);
 });
 
 test("should append dot at end of changelog message", async () => {

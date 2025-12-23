@@ -43,7 +43,10 @@ import('meow').then(meow => {  // eslint-disable-line
   const command = commands[cli.input[0]];
 
   if (command !== undefined) {
-    command(cli.input, cli.flags);
+    const res = command(cli.input, cli.flags);
+    if (res) {
+      process.exit(res);
+    }
   } else {
     cli.showHelp(0);
   }

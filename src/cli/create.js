@@ -23,7 +23,7 @@ Choose one of available fragment types: {green ${availableFragmentTypes}}`;
 
     process.stdout.write(message);
 
-    return message;
+    return 1;
   }
 
   const fragmentsFolder = newsFragmentsUserConfig.fragmentsFolder;
@@ -45,5 +45,5 @@ Choose one of available fragment types: {green ${availableFragmentTypes}}`;
 
   process.stdout.write(chalk.green(message));
 
-  return message;
+  return 0;
 };
