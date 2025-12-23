@@ -13,7 +13,12 @@ ${compiledTemplate}
 }
 
 export const renderTemplate = function (changelogTemplate, data, version) {
-  const compiledTemplate = Handlebars.compile(changelogTemplate, { noEscape: true });
+  if (fs.existsSync(changelogTemplate)) {
+    changelogTemplate = fs.readFileSync(changelogTemplate, "utf8");
+  }
+  const compiledTemplate = Handlebars.compile(changelogTemplate, {
+    noEscape: true,
+  });
   return injectMetadata(compiledTemplate(data), version);
 };
 
