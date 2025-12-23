@@ -31,7 +31,7 @@ export default class NewsFragments extends Plugin {
     const renderedTemplate = renderTemplate(
       newsFragmentsUserConfig.changelogTemplate,
       templateData,
-      version,
+      newsFragmentsUserConfig.changelogAddMetadata ? version : undefined,
     );
     saveChangelogToFile(
       newsFragmentsUserConfig.changelogFile,

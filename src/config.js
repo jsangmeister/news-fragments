@@ -12,6 +12,7 @@ const schema = Joi.object({
   changelogFile: Joi.string().required(),
   changelogDateFormat: Joi.string().required(),
   changelogTemplate: Joi.string().required(),
+  changelogAddMetadata: Joi.bool().required(),
   fragmentsFolder: Joi.string().required(),
   fragmentsTypes: Joi.array().items(fragmentsTypesSchema).required(),
 });
@@ -30,6 +31,7 @@ const baseConfig = {
   changelogFile: "CHANGELOG.md",
   changelogDateFormat: "YYYY-MM-DD",
   changelogTemplate: changelogTemplate,
+  changelogAddMetadata: true,
   fragmentsFolder: "fragments",
   fragmentsTypes: [
     { title: "Features", extension: "feature" },

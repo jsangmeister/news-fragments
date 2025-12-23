@@ -39,7 +39,7 @@ export const preview = function (inputs, flags) {
   const renderedTemplate = renderTemplate(
     newsFragmentsUserConfig.changelogTemplate,
     templateData,
-    version,
+    newsFragmentsUserConfig.changelogAddMetadata ? version : undefined,
   );
 
   const output = marked(renderedTemplate);
