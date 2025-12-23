@@ -46,7 +46,7 @@ export default class NewsFragments extends Plugin {
     return renderTemplate(
       userConfig.changelogTemplate,
       templateData,
-      version,
+      newsFragmentsUserConfig.changelogAddMetadata ? version : undefined,
     );
   }
   bump(version) {

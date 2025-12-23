@@ -16,10 +16,9 @@ export const renderTemplate = function (changelogTemplate, data, version) {
   if (fs.existsSync(changelogTemplate)) {
     changelogTemplate = fs.readFileSync(changelogTemplate, "utf8");
   }
-  const compiledTemplate = Handlebars.compile(changelogTemplate, {
-    noEscape: true,
-  });
-  return injectMetadata(compiledTemplate(data), version);
+  const compiledTemplate = Handlebars.compile(changelogTemplate);
+  const renderedTemplate = compiledTemplate(data);
+  return version ? injectMetadata(renderedTemplate, version) : renderedTemplate;
 };
 
 export const saveChangelogToFile = function (filePath, renderedTemplate) {

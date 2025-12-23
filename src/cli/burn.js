@@ -40,7 +40,7 @@ Remember to create with {green news-fragments create <fragment-type> <fragment-t
   const renderedTemplate = renderTemplate(
     newsFragmentsUserConfig.changelogTemplate,
     templateData,
-    version,
+    newsFragmentsUserConfig.changelogAddMetadata ? version : undefined,
   );
 
   saveChangelogToFile(newsFragmentsUserConfig.changelogFile, renderedTemplate);
