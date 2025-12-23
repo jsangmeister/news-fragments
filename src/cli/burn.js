@@ -19,7 +19,7 @@ Please, provide one like: {green news-fragments burn 0.0.1}`;
 
     process.stdout.write(message);
 
-    return message;
+    return 1;
   }
 
   if (!newsFragments.fragmentsToBurn.length) {
@@ -28,7 +28,7 @@ Remember to create with {green news-fragments create <fragment-type> <fragment-t
 
     process.stdout.write(message);
 
-    return message;
+    return 1;
   }
 
   const templateData = generateTemplateData(
@@ -54,5 +54,5 @@ Remember to create with {green news-fragments create <fragment-type> <fragment-t
 
   process.stdout.write(message);
 
-  return message;
+  return 0;
 };
