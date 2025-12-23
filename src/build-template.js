@@ -13,6 +13,9 @@ ${compiledTemplate}
 }
 
 export const renderTemplate = function (changelogTemplate, data, version) {
+  if (fs.existsSync(changelogTemplate)) {
+    changelogTemplate = fs.readFileSync(changelogTemplate, "utf8");
+  }
   const compiledTemplate = Handlebars.compile(changelogTemplate);
   return injectMetadata(compiledTemplate(data), version);
 };
