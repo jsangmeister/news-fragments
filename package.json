@@ -10,7 +10,8 @@
     "test:ui": "npx vitest --ui",
     "lint": "eslint *.js --ignore-pattern node_modules/",
     "lint:fix": "eslint *.js --fix --ignore-pattern node_modules/",
-    "release": "release-it"
+    "release": "release-it",
+    "publish-wo": "npm version prerelease --preid wo && npm publish --tag latest"
   },
   "repository": {
     "type": "git",
