@@ -11,7 +11,7 @@
     "lint": "eslint *.js --ignore-pattern node_modules/",
     "lint:fix": "eslint *.js --fix --ignore-pattern node_modules/",
     "release": "release-it",
-    "publish-wo": "npm version prerelease --preid wo && npm publish --tag latest"
+    "publish-wo": "npm version prerelease --preid wo --no-git-tag-version --no-commit-hooks && npm publish --tag latest && git reset --hard"
   },
   "repository": {
     "type": "git",
